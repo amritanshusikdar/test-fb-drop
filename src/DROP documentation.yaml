@@ -1,0 +1,631 @@
+swagger: "2.0"
+info:
+  description: "This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters."
+  version: "1.0.0"
+  title: "DROP Documentation"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "petstore.swagger.io"
+basePath: "/v1"
+tags:
+  - name: "business Page"
+    description: "Everything about your business profile"
+schemes:
+  - "https"
+  - "http"
+paths:
+  /business/{id}:
+    get:
+      tags:
+        - "business Page"
+      summary: "get one businesses"
+      description: "One business profile"
+      operationId: "oneBusiness"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Id of business to return"
+          required: true
+          type: "integer"
+          format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/business"
+        "400":
+          description: "Invalid id value"
+  /business:
+    get:
+      tags:
+        - "business Page"
+      summary: "get all businesses"
+      description: ""
+      operationId: "allBusiness"
+      produces:
+        - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/business"
+        "400":
+          description: "Invalid id value"
+  /business/addNew:
+    post:
+      tags:
+        - "business Page"
+      summary: "add new business"
+      description: ""
+      operationId: ""
+      consumes:
+        - "multipart/form-data"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "Form details are submitted to add new business"
+          required: true
+          schema:
+            $ref: "#/definitions/business"
+      responses:
+        "200":
+          description: "successful operation"
+        "405":
+          description: "Invalid input"
+  /overview:
+    get:
+      tags:
+        - "overview Page"
+      summary: "get overview page"
+      description: ""
+      operationId: ""
+      produces:
+        - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/homeOverview"
+        "500":
+          description: "Server Error"
+  /orderRequest:
+    post:
+      tags:
+        - "overview Page"
+      summary: "accept or deny order request"
+      description: ""
+      operationId: ""
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Pet object that needs to be added to the store"
+          required: true
+          schema:
+            $ref: "#/definitions/orderRequest"
+      responses:
+        "200":
+          description: "successful operation"
+        "405":
+          description: "Invalid input"
+  /createUser:
+    post:
+      tags:
+        - "Authentication"
+      summary: "take email,password from user and create user "
+      description: ""
+      operationId: ""
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Pet object that needs to be added to the store"
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: "successful operation user created successfully"
+        "405":
+          description: "Invalid input"
+  /UserSignin:
+    post:
+      tags:
+        - "Authentication"
+      summary: "Logs user into the system"
+      description: ""
+      operationId: "loginUser"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "email"
+          in: "query"
+          description: "The user name for login"
+          required: true
+          type: "string"
+        - name: "password"
+          in: "query"
+          description: "The password for login in clear text"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "405":
+          description: "Invalid input"
+  /UserLogout:
+    post:
+      tags:
+        - "Authentication"
+      summary: "Logs out current logged in user session"
+      description: ""
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters: []
+      responses:
+        default:
+          description: "successful operation"
+  /deleteuser:
+    post:
+      tags:
+        - "Authentication"
+      summary: "Delete the user account"
+      description: "This can only be done by the logged in user."
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters: []
+      responses:
+        default:
+          description: "successful operation"
+  /updatepassword:
+    post:
+      tags:
+        - "Authentication"
+      summary: "Loged user can change his password"
+      description: "give input a new password"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "password"
+          in: "query"
+          description: "The password for login in clear text"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "405":
+          description: "Invalid input"
+  /sendEmailVerification:
+    post:
+      tags:
+        - "Authentication"
+      summary: "verification link will be send to mail "
+      description: ""
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters: []
+      responses:
+        default:
+          description: "successful operation link sent to your mail"
+  /business/StockUpdate:
+    get:
+      tags:
+        - "business Page"
+      summary: "get all Stock Details"
+      description: ""
+      operationId: "StockUpdate"
+      produces:
+        - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/StockUpdate"
+        "400":
+          description: "Invalid id value"
+  /business/DailyOrders:
+    get:
+      tags:
+        - "business Page"
+      summary: "get all orders"
+      description: ""
+      operationId: "Daily Order List"
+      produces:
+        - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/DailyOrders"
+        "400":
+          description: "Invalid id value"
+  /business/Complaints:
+    get:
+      tags:
+        - "business Page"
+      summary: "get all Complaints"
+      description: ""
+      operationId: "Complaints"
+      produces:
+        - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Complaints"
+        "400":
+          description: "Invalid id value"
+  /Drone/main:
+    get:
+      tags:
+        - "Drone"
+      summary: "get all Complaints"
+      description: ""
+      operationId: "Drones"
+      produces:
+        - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/drone"
+        "400":
+          description: "Invalid id value"
+  /Drone/Schedule:
+    get:
+      tags:
+        - "Drone"
+      summary: "view the schedule section"
+      description: ""
+      operationId: "DronesSchedule"
+      produces:
+        - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/drone"
+        "400":
+          description: "Invalid id value"
+  /Drone/Profile:
+    get:
+      tags:
+        - "Drone"
+      summary: "view the drone profile section"
+      description: ""
+      operationId: "DronesProfile"
+      produces:
+        - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/drone"
+        "400":
+          description: "Invalid id value"
+
+securityDefinitions:
+  petstore_auth:
+    type: "oauth2"
+    authorizationUrl: "http://petstore.swagger.io/oauth/dialog"
+    flow: "implicit"
+    scopes:
+      write:pets: "modify pets in your account"
+      read:pets: "read your pets"
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+definitions:
+  overallOrders:
+    type: "object"
+    properties:
+      Done:
+        type: "integer"
+        format: "int64"
+        example: "225"
+      Denied:
+        type: "integer"
+        format: "int64"
+        example: "120"
+      Pending:
+        type: "integer"
+        format: "int64"
+        example: "80"
+      New:
+        type: "integer"
+        format: "int64"
+        example: "110"
+  orderRequest:
+    type: "object"
+    required:
+      - "orderId"
+      - "customerId"
+      - "cost"
+    properties:
+      orderId:
+        type: "string"
+        example: "A0001"
+      customerId:
+        type: "integer"
+        format: "int64"
+        example: "17453"
+      orderedTime:
+        type: "string"
+        format: "date-time"
+      name:
+        type: "string"
+      cost:
+        type: "number"
+        example: 230
+      itemWeight:
+        type: "number"
+      destination:
+        type: "string"
+  liveOrder:
+    type: "object"
+    required:
+      - "status"
+      - "orderId"
+    properties:
+      status:
+        type: "string"
+        description: "Order status"
+        enum:
+          - "Confirmed"
+          - "Check"
+          - "Packed"
+          - "Dispatched"
+      time:
+        type: "string"
+        format: "date-time"
+      orderId:
+        type: "string"
+      name:
+        type: "string"
+  drone:
+    type: "object"
+    required:
+      - "droneId"
+      - "location"
+    properties:
+      droneId:
+        type: "integer"
+        format: "int64"
+      battery:
+        type: "integer"
+        format: "int64"
+      speed:
+        type: "number"
+      location:
+        type: "object"
+        properties:
+          latitude:
+            type: "number"
+            example: 109822.3444
+          longitude:
+            type: "number"
+          place:
+            type: "string"
+            example: "chinchwad"
+      status:
+        type: "string"
+        description: "Drone status"
+        enum:
+          - "Delivering/active"
+          - "Destination"
+          - "returning"
+      time:
+        type: "object"
+        properties:
+          estimatedReachTime:
+            type: "string"
+            format: "date-time"
+          estimatedReturnTime:
+            type: "string"
+            format: "date-time"
+      orderInfo:
+        type: "object"
+        properties:
+          orderId:
+            type: "integer"
+          businessOwner:
+            type: "string"
+          packageWeight:
+            type: "number"
+  homeOverview:
+    type: "object"
+    properties:
+      drone:
+        $ref: "#/definitions/drone"
+      liveOrder:
+        $ref: "#/definitions/liveOrder"
+      overallOrders:
+        $ref: "#/definitions/overallOrders"
+      orderRequest:
+        $ref: "#/definitions/orderRequest"
+  business:
+    type: "object"
+    required:
+      - "businessName"
+      - "businessID"
+    properties:
+      businessID:
+        type: "integer"
+        format: "int64"
+      pinCode:
+        type: "integer"
+      businessName:
+        type: "string"
+        example: "xxName"
+      logoUrl:
+        type: "string"
+      description:
+        type: "string"
+      imageUrls:
+        type: "array"
+        xml:
+          name: "photoUrl1"
+        items:
+          type: "string"
+      onwer:
+        type: "string"
+      viewSiteUrl:
+        type: "string"
+      email:
+        type: "string"
+      phoneNumber:
+        type: "string"
+      status:
+        type: "string"
+        description: "Stock status"
+        enum:
+          - "Stock Updated"
+          - "Pending Update"
+  User:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+      password:
+        type: "string"
+
+  StockDetails:
+    type: "object"
+    properties:
+      Stock Update:
+        type: "string"
+        description: "Stock status"
+        enum:
+          - "Pending"
+          - "Completed"
+          - "Critical"
+      Business:
+        type: "string"
+        example: "Dmart"
+      Faulty Stock:
+        type: "integer"
+        format: "int64"
+      To be Exhauged:
+        type: "integer"
+        format: "int64"
+      Stock Availability:
+        type: "string"
+        enum:
+          - "Available"
+          - "Unavailable"
+          - "Not Updated"
+  StockUpdate:
+    type: "object"
+    properties:
+      StockDetails:
+        $ref: "#/definitions/StockDetails"
+      AverageSales:
+        type: "object"
+        properties:
+          businessId:
+            type: "string"
+          PercentAvg:
+            type: "number"
+            example: "56.87"
+      status:
+        type: "object"
+        properties:
+          toReturn:
+            type: "number"
+          faulty:
+            type: "number"
+          shippedOrders:
+            type: "number"
+  DailyOrders:
+    type: "object"
+    properties:
+      Product Details:
+        type: "string"
+      price:
+        type: "number"
+        example: 233.4
+      Location:
+        type: "string"
+        description: "Address"
+      Weighteg:
+        type: "string"
+      Availaibility:
+        type: "string"
+        enum:
+          - "Yes"
+          - "No"
+      Alloted Drone:
+        type: "integer"
+        format: "int64"
+  CustomerComplaints:
+    type: "object"
+    properties:
+      Costemer Name:
+        type: "string"
+      ComplaintText:
+        type: "string"
+      Complaint Date:
+        type: "string"
+        format: "date-time"
+      Userimg:
+        type: "string"
+        example: "image url"
+  Complaints:
+    type: "object"
+    properties:
+      noOfComplaints:
+        type: "object"
+        properties:
+          solved:
+            type: "integer"
+            format: "int64"
+          unSolved:
+            type: "integer"
+            format: "int64"
+      CustomerComplaints:
+        $ref: "#/definitions/CustomerComplaints"
+
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
